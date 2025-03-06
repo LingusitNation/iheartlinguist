@@ -19,7 +19,7 @@
 
     <script>
         document.getElementById('fetchButton').addEventListener('click', function() {
-            const imageUrl = 'https://raw.githubusercontent.com/LingusitNation/iheartlinguist/main/heart.png'; // Replace with your actual URL
+            const imageUrl = 'https://raw.githubusercontent.com/LingusitNation/iheartlinguist/main/sketch1741082607009.png'; // Corrected URL
             
             fetch(imageUrl)
                 .then(response => {
