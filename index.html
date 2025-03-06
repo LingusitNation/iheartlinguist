@@ -1,21 +1,27 @@
+// access page at https://lingusitnation.github.io/iheartlinguist/
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>View & Download Heart Image</title>
+    <title>LinguistNation Heart</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 50px;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
         }
-        #output {
-            margin-top: 20px;
-        }
-        #output img {
-            max-width: 300px;
-            margin-top: 20px;
+        #image-container img {
+            max-width: 90%;
+            max-height: 70vh;
         }
         button {
+            margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -24,39 +30,31 @@
 </head>
 <body>
 
-    <h1>View & Download Heart Image</h1>
-    <button id="fetchAndDownloadButton">Show & Download Heart Image</button>
-    <div id="output"></div>
+    <div id="image-container">
+        <img id="heartImage" src="https://raw.githubusercontent.com/LingusitNation/iheartlinguist/main/sketch1741082607009.png" alt="LinguistNation Heart">
+    </div>
+
+    <button id="downloadButton">Download This Image</button>
 
     <script>
-        document.getElementById('fetchAndDownloadButton').addEventListener('click', function() {
+        document.getElementById('downloadButton').addEventListener('click', function() {
             const imageUrl = 'https://raw.githubusercontent.com/LingusitNation/iheartlinguist/main/sketch1741082607009.png';
 
             fetch(imageUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch image');
-                    }
-                    return response.blob();
-                })
+                .then(response => response.blob())
                 .then(blob => {
-                    const imgElement = document.createElement('img');
-                    const imgURL = URL.createObjectURL(blob);
-                    imgElement.src = imgURL;
-                    document.getElementById('output').innerHTML = ''; // Clear previous image
-                    document.getElementById('output').appendChild(imgElement);
-
+                    const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.style.display = 'none';
-                    a.href = imgURL;
-                    a.download = 'iheartlinguist.png';
+                    a.href = url;
+                    a.download = 'LinguistNation-Heart.png';  // Customize the file name here
                     document.body.appendChild(a);
                     a.click();
-                    window.URL.revokeObjectURL(imgURL);
+                    URL.revokeObjectURL(url);
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('output').innerText = 'Failed to load and download image.';
+                    console.error('Download failed:', error);
+                    alert('Failed to download the image.');
                 });
         });
     </script>
