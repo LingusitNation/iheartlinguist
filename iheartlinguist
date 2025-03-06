@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Git Repo Fetch Demo</title>
+    <style>
+        #output {
+            margin-top: 20px;
+        }
+        #output img {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fetch Heart From Repo</h1>
+    <button id="fetchButton">Get Heart Image</button>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const imageUrl = 'https://raw.githubusercontent.com/username/repo/main/heart.svg'; // Replace with your actual URL
+            
+            fetch(imageUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch image');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = URL.createObjectURL(blob);
+                    document.getElementById('output').innerHTML = ''; // Clear previous image
+                    document.getElementById('output').appendChild(imgElement);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('output').innerText = 'Failed to load image.';
+                });
+        });
+    </script>
+
+</body>
+</html>
